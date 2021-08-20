@@ -2,23 +2,6 @@
 
 namespace Learning_C_
 {
-    class RollingDie
-    {
-        private Random random;
-        private int side;
-
-        public RollingDie()
-        {
-            side = 6;
-            random = new Random();
-        }
-
-        public int Roll()
-        {
-            return random.Next(1, side + 1);
-        }
-    }
-
     class Wizard
     {
         public string name;
@@ -210,6 +193,7 @@ namespace Learning_C_
             Console.WriteLine(message);
             Console.ResetColor();
         }
+
         static int RollingDie()
         {
             Random random;
