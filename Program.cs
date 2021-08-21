@@ -9,9 +9,9 @@ namespace Learning_C_
         public int spellSlots;
         public float experience;
 
-        public static int Count;
+        public static int Count; // static variables  are used for defining constants because their values can be retrieved by invoking the class without creating an instance of it.
 
-        public Wizard(string _name, string _favouriteSpell) // Constructor
+        public Wizard(string _name, string _favouriteSpell) // Constructor; for initializing
         {
             name = _name;
             favouriteSpell = _favouriteSpell;
@@ -45,8 +45,8 @@ namespace Learning_C_
         {
             name = _name;
             favWeapon = _favWeapon;
-            weaponDamage = 50;
-            health = 10;
+            weaponDamage = 5;
+            health = 2;
         }
 
         public void Weaponswing()
@@ -55,31 +55,49 @@ namespace Learning_C_
             weaponDamage--;
         }
 
-        public void changeWeapon()
+        public void changeWeapon(string favweapon2)
         {
-            Console.WriteLine(name + " changes weapon.");
+            Console.WriteLine(name + " swings another sword " + favweapon2);
+            health--;
         }
+
     }
 
-    class Dragon_Guardian
+    class Dragon_Guards
     {
         public string name;
         public string handSign; // weave hand signs to produce fire and water learnt from the dragon named: Agni(fire)
+        public string potion; // to restore health
         public int energy; //aka chakra from naruto
         public int health;
         
-        public Dragon_Guardian(string _name, string _handSign)
+        public Dragon_Guards(string _name, string _handSign, string _potion)
         {
             name = _name;
             handSign = _handSign;
-            energy = 100;
-            health = 10;
+            energy = 6;
+            health = 3;
+            potion = _potion;
         }
 
         public void HandSign()
         {
-            Console.WriteLine(name + " weaves " + handSign + " and shoots a big Fire Ball!!!!");
+            if ( handSign == "Agni" )
+            {
+                Console.WriteLine(name + " weaves " + handSign + " and shoots a big Fire Ball!!!!");
+            }
+            else if (handSign == "Pani" )
+            {
+                Console.WriteLine(name + " weaves " + handSign + " and floods the Cave!!!!");
+            }
             energy-= 2;
+            health--;
+        }
+        public void restoreJuice()
+        {
+            Console.WriteLine(name + " drinks " + potion+ " to recharge his energy!");
+            energy = 50;
+            health = 3;
         }
 
     }
@@ -88,6 +106,8 @@ namespace Learning_C_
 
     class Program
     {
+        public static object KeyPress { get; private set; }
+
         static void Main(string[] args)
         {
             /* BTS Fantasy Universe
@@ -167,7 +187,7 @@ namespace Learning_C_
 
                     //For calling Dragon hunters
                     string part13 = " " +name +" We are in a dire situation...\n Press K to Roll the die again...";
-                    PrintColorMessage(ConsoleColor.Red, part13);
+                    PrintColorMessage(ConsoleColor.Gray, part13);
                     string key2 = Console.ReadLine().ToUpper();
 
                     if (key2 == "K")
@@ -176,11 +196,80 @@ namespace Learning_C_
                         {
                             Dragon_Hunter hunter01 = new Dragon_Hunter("Kim Seokjin", "Impaca!");
                             hunter01.Weaponswing();
+                            while(hunter01.weaponDamage!=0)
+                            {
+                                string part14 = " The Dragon attacks " + hunter01.name;
+                                PrintColorMessage(ConsoleColor.DarkMagenta, part14);
+                                hunter01.Weaponswing();
+                            }
+                            string part15 = " " +hunter01.name + "'s Weapon is Damaged!!!";
+                            PrintColorMessage(ConsoleColor.DarkCyan, part15);
+                            hunter01.changeWeapon("Tupaca!!");
+                            while(hunter01.health != 0)
+                            {
+                                string part16 = " The Dragon attacks " + hunter01.name;
+                                PrintColorMessage(ConsoleColor.DarkMagenta, part16);
+                                hunter01.changeWeapon("Tupaca!!");
+                            }
+                            string part18 = " " +hunter01.name +" has been defeated";
+                            PrintColorMessage(ConsoleColor.DarkGreen, part18);
+                            
                         }
                         else
                         {
                             Dragon_Hunter hunter02 = new Dragon_Hunter("Jeon Jungkook", "Dynanananana!");
                             hunter02.Weaponswing();
+                            while(hunter02.weaponDamage!=0)
+                            {
+                                string part16 = " The Dragon attacks " + hunter02.name;
+                                PrintColorMessage(ConsoleColor.DarkMagenta, part16);
+                                hunter02.Weaponswing();
+                            }
+                            string part17 = " " +hunter02.name + "'s Weapon is Damaged!!!";
+                            PrintColorMessage(ConsoleColor.DarkCyan, part17);
+                            hunter02.changeWeapon("Bananana!!");
+                            while(hunter02.health != 0)
+                            {
+                                string part19 = " The Dragon attacks " + hunter02.name;
+                                PrintColorMessage(ConsoleColor.DarkMagenta, part19);
+                                hunter02.changeWeapon("Bananana!!");
+                            }
+                            string part20 = " " +hunter02.name +" has been defeated";
+                            PrintColorMessage(ConsoleColor.DarkGreen, part20);
+                            
+                        }
+
+                        //For calling Dragon Guards
+                        string part21 = " " +name +" This Demon Dragon is very powerful!!!\n Press W to Roll the die again...";
+                        PrintColorMessage(ConsoleColor.Gray, part21);
+                        string key3 = Console.ReadLine().ToUpper();
+
+                        if(key3 == "W")
+                        {
+                            if (RollingDie()<=3)
+                            {
+                                Dragon_Guards guards01 = new Dragon_Guards("Park Jimin", "Agni", "Coconut potion");
+                                guards01.HandSign();
+                                while(guards01.health !=0 )
+                                {
+                                    string part22 = " The Dragon attacks!!" + guards01.name;
+                                    PrintColorMessage(ConsoleColor.Red, part22);
+                                    guards01.HandSign();
+                                }
+                                
+                            }
+                            else
+                            {
+                                Dragon_Guards guards02 = new Dragon_Guards("Jung Hoseok", "Pani", "Coconut potion");
+                                guards02.HandSign();
+                                while(guards02.health !=0 )
+                                {
+                                    string part22 = " The Dragon attacks!!" + guards02.name;
+                                    PrintColorMessage(ConsoleColor.Red, part22);
+                                    guards02.HandSign();
+                                }
+                            }
+                            
                         }
                     }
 
@@ -213,6 +302,8 @@ namespace Learning_C_
 
             Console.ReadKey();
         }
+
+        // A static method in C# is a method that keeps only one copy of the method
 
         static void GetAppInfo()
         {
