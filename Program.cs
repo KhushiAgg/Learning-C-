@@ -96,7 +96,7 @@ namespace Learning_C_
         public void restoreJuice()
         {
             Console.WriteLine(name + " drinks " + potion+ " to recharge his energy!");
-            energy = 50;
+            energy = 6;
             health = 3;
         }
 
@@ -112,7 +112,7 @@ namespace Learning_C_
         {
             /* BTS Fantasy Universe
             Characters: Kim Namjoon and Min Yoongi as Wizards, UTILIZED
-            Kim Seokjin and Jeon Jungkook as Dragon Hunters 
+            Kim Seokjin and Jeon Jungkook as Dragon Hunters, UTILIZED
             Jung Hoseok as Queen's knight
             Kim Taehyung as Black smith's son (Story's pov); character development from smith to The Greatest wizard
             Park Jimin as The Dragon guardian,
@@ -195,6 +195,8 @@ namespace Learning_C_
                         if (RollingDie()<=3)
                         {
                             Dragon_Hunter hunter01 = new Dragon_Hunter("Kim Seokjin", "Impaca!");
+                            string part25 = " Dragon Hunter "+hunter01.name + " has appeared right on time!!!";
+                            PrintColorMessage(ConsoleColor.DarkBlue, part25);
                             hunter01.Weaponswing();
                             while(hunter01.weaponDamage!=0)
                             {
@@ -218,6 +220,8 @@ namespace Learning_C_
                         else
                         {
                             Dragon_Hunter hunter02 = new Dragon_Hunter("Jeon Jungkook", "Dynanananana!");
+                            string part25 = " Dragon Hunter " +hunter02.name+ " has appeared right on time!!!";
+                            PrintColorMessage(ConsoleColor.DarkBlue, part25);
                             hunter02.Weaponswing();
                             while(hunter02.weaponDamage!=0)
                             {
@@ -249,6 +253,9 @@ namespace Learning_C_
                             if (RollingDie()<=3)
                             {
                                 Dragon_Guards guards01 = new Dragon_Guards("Park Jimin", "Agni", "Coconut potion");
+                                string part26 = " Looks like you summoned a very powerful fighter!!! \n Queen's personal Guard " + guards01.name;
+                                PrintColorMessage(ConsoleColor.DarkBlue, part26);
+
                                 guards01.HandSign();
                                 while(guards01.health !=0 )
                                 {
@@ -256,17 +263,46 @@ namespace Learning_C_
                                     PrintColorMessage(ConsoleColor.Red, part22);
                                     guards01.HandSign();
                                 }
-                                
+                                string part23 = " Oh no! " +guards01.name + " is out of Chakra!!!";
+                                PrintColorMessage(ConsoleColor.Red, part23);
+                                guards01.restoreJuice();
                             }
                             else
                             {
                                 Dragon_Guards guards02 = new Dragon_Guards("Jung Hoseok", "Pani", "Coconut potion");
+                                string part26 = " Looks like you summoned a very powerful fighter!!! \n Queen's personal Guard " + guards02.name;
+                                PrintColorMessage(ConsoleColor.DarkBlue, part26);
                                 guards02.HandSign();
                                 while(guards02.health !=0 )
                                 {
                                     string part22 = " The Dragon attacks!!" + guards02.name;
                                     PrintColorMessage(ConsoleColor.Red, part22);
                                     guards02.HandSign();
+                                }
+                                string part24 = " Oh no! " +guards02.name + " is out of Chakra!!!";
+                                PrintColorMessage(ConsoleColor.Red, part24);
+                                guards02.restoreJuice();
+                            }
+                            
+                            string part27 = " Ohhh Kim Taehyung has found an ancient book!!!\n Flip flip Flip \n " + name +" You have obtained the power of the book: Telepathy!!!!\n You need to guess a number between 0-10 which Kim Taehyung is thinking...\n You'll be given 5 chances if you guess wrong You die, We die Everybody die!!!\n Good luck! " +name;
+                            PrintColorMessage(ConsoleColor.Cyan, part27);
+
+                            for (int i = 4; i>=0; i--)
+                            {
+                                if (GuessNumber() == 1)
+                                {
+                                    PrintColorMessage(ConsoleColor.DarkGreen, "CORRECT guess!!!\n\n");
+                                    PrintColorMessage(ConsoleColor.DarkCyan, " Kim Taehyung casts Purple Sparkle...\t Congratulations!!! \tYou have defeated the Demon Dragon!!!");
+                                    break;
+                                }
+                                else
+                                {
+                                    PrintColorMessage(ConsoleColor.Red, "You guessed the Wrong number...");
+                                    PrintColorMessage(ConsoleColor.Blue, "Chances left: " + i);
+                                    if(i == 0)
+                                    {
+                                        PrintColorMessage(ConsoleColor.DarkYellow, "Demon Dragon burns everyone!!!" );
+                                    }
                                 }
                             }
                             
@@ -278,28 +314,6 @@ namespace Learning_C_
 
             }
 
-
-
-
-            
-            /* Wizard wizard01 = new Wizard("Kim Namjoon" , "Golden Tip!");
-            wizard01.CastSpell();
-
-            Wizard wizard02 = new Wizard("Min Yoongi", "Minstradamus!");
-            wizard02.CastSpell();
-
-            Dragon_Hunter hunter01 = new Dragon_Hunter("Kim Seokjin", "Impaca!");
-            hunter01.Weaponswing();
-
-            Dragon_Hunter hunter02 = new Dragon_Hunter("Jeon Jungkook", "Dynanananana!");
-            hunter02.Weaponswing();
-
-            Dragon_Hunter queensKnight = new Dragon_Hunter("Jung Hoseok", "Kawsssss!");
-            queensKnight.Weaponswing();
-
-            Dragon_Guardian guardian = new Dragon_Guardian("Park Jimin", "Horse, Serpent, Ram, Monkey, Boar, Horse, Tiger!");
-            guardian.HandSign(); */
-
             Console.ReadKey();
         }
 
@@ -310,7 +324,7 @@ namespace Learning_C_
             // Set app variables
             string gameName = "Greatest Wizard";
             string gameVersion = "1.0.0";
-            string gameAuthor = "Khushi Agarwal";
+            string gameAuthor = "Khushi Aggarwal";
 
             Console.ForegroundColor = ConsoleColor.Cyan;
 
@@ -328,11 +342,40 @@ namespace Learning_C_
 
         static int RollingDie()
         {
-            Random random;
+            Random random = new Random();
             int side = 6;
-            random = new Random();
 
             return random.Next(1, side + 1);
+        }
+
+        static int GuessNumber()
+        {
+            Random random = new Random(); 
+            int correctNum = random.Next(1, 10);
+            int guess = 0;
+            int temp = 1;
+            Console.WriteLine("Guess a number between 1 and 10: ");
+
+            while (guess != correctNum)
+            {
+                string mynum = Console.ReadLine();
+                if (!int.TryParse(mynum, out guess))
+                {
+                    PrintColorMessage(ConsoleColor.Red, "Input a number!");
+                    continue;
+                }
+                guess = Int32.Parse(mynum);
+
+                if(guess != correctNum)
+                {
+                    temp = 0;
+                    return temp;
+                    //PrintColorMessage(ConsoleColor.Gray, "You guessed the Wrong number...");
+                }
+            }
+            return temp;
+            //PrintColorMessage(ConsoleColor.DarkGreen, "CORRECT guess!!!");
+            
         }
 
     }
